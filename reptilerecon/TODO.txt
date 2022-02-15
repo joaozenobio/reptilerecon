@@ -1,0 +1,12 @@
+crispy form
+extends base.html
+navbar
+
+garantir que mesmo se o video tiver menos de 2.5Mb vat ter path
+
+yolov5 na view do upload
+entao adicionar o plotly para gerar o html (figure.to_html()) e mostrar no detail
+
+estudar como a substituição do dataframe foi feita (favoritos)
+
+atualizar media_root e base_dir com os.path.join()
