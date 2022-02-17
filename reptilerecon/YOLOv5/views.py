@@ -1,7 +1,5 @@
-from django.core.exceptions import PermissionDenied
 from .models import Video
 from django.shortcuts import render
-from django.http import HttpResponse, Http404
 from django.views import generic
 from django.urls import reverse_lazy
 from django.views.generic.edit import FormView
