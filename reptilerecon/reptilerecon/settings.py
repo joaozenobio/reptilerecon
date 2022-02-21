@@ -23,11 +23,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-0_1a9d%1*$iil-vz1871d8pqcl4uf%-(@2&=k0(qpto7@4&%&2'
 
+# SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
+#'200.239.169.123'
 
+SECURE_SSL_REDIRECT = False
 
 # Application definition
 
@@ -38,11 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'crispy_forms',
     'YOLOv5.apps.Yolov5Config',
 ]
-
-CRISPY_TEMPLATE_PACK = 'bootstrap'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
