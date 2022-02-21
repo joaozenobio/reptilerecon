@@ -1,3 +1,1 @@
-navbar -> botao de voltar
 
-garantir que mesmo se o video tiver menos de 2.5Mb vat ter path

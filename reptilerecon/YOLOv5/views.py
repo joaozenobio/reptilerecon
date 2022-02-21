@@ -21,8 +21,8 @@ class UploadVideoFormView(FormView):
     template_name = 'index.html'
     success_url = reverse_lazy('YOLOv5_nm:index')
 
-    def validate_file_extension(self, video):
-        ext = os.path.splitext(video.temporary_file_path())[1]
+    def __validate_file_extension(self, video_path):
+        ext = os.path.splitext(video_path)[1]
         valid_extensions = ['.mp4']
         if not ext.lower() in valid_extensions:
             raise ValidationError('Unsupported file extension.')
@@ -33,12 +33,10 @@ class UploadVideoFormView(FormView):
         files = request.FILES.getlist('video')
         if form.is_valid():
             for f in files:
-                self.validate_file_extension(f)
+                self.__validate_file_extension(f.temporary_file_path())
             for f in files:
-                # Get video
                 video = Video(video=f)
                 video_path = f.temporary_file_path()
-                # Get processed video and signal
                 model = torch.hub.load(f"{settings.BASE_DIR}/yolov5", 'custom', path=f"{settings.BASE_DIR}/best.pt", source='local')
                 model.conf = 0.25
                 video_capture = cv2.VideoCapture(video_path)
@@ -92,8 +90,7 @@ class UploadVideoFormView(FormView):
                 with open(video_output_path, 'rb') as f1, open(csv_output_path, 'rb') as f2:
                     video.processed_video.save('result.mp4', File(f1), save=False)
                     video.signal.save('result.csv', File(f2), save=False)
-
-                # Get thumb
+                video.name = video_path.split('/')[-1][0:-4]
                 video_capture = cv2.VideoCapture(video_path)
                 success, image = video_capture.read()
                 image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)

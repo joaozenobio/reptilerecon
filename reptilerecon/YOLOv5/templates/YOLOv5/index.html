@@ -1,5 +1,7 @@
 {% extends 'YOLOv5/base.html' %}
 
+{% load index_tags %}
+
 {% block navbar %}
 
     <form class="" action="{% url 'YOLOv5:index' %}" method="post" enctype="multipart/form-data">
@@ -31,36 +33,43 @@
                 </a>
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
-                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modal{{ video.id }}">
-                            Deletar
-                        </button>
-                        <form action="{% url 'YOLOv5:delete' video.id %}" method="post" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            <div class="modal fade" id="modal{{ video.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title" id="staticBackdropLabel">
-                                                Você tem certeza que quer deletar este video?
-                                            </h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            <img src="{{ video.thumbnail.url }}" class="card-img-top" alt="...">
-                                            <small class="text-muted modal-footer">
-                                                {{ video.created_at|date:'d-m-Y H:i' }}
-                                            </small>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                            <input class="btn btn-sm btn-outline-danger" type="submit" value="Delete">
+                        <div class="row">
+                            <div class="col-12 d-flex justify-content-between align-items-baseline">
+                                <h4 class="d-flex">{{ video.video.url|get_file_name }}</h4>
+                                <small class="text-muted d-flex">
+                                    {{ video.created_at|date:'d-m-Y H:i' }}
+                                </small>
+                            </div>
+                            <div class="col-12 d-flex justify-content-end">
+                                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modal{{ video.id }}">
+                                    Deletar
+                                </button>
+                                <form action="{% url 'YOLOv5:delete' video.id %}" method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="modal fade" id="modal{{ video.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title" id="staticBackdropLabel">
+                                                        Você tem certeza que quer deletar este video?
+                                                    </h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <img src="{{ video.thumbnail.url }}" class="card-img-top" alt="...">
+                                                    <small class="text-muted modal-footer">
+                                                        {{ video.created_at|date:'d-m-Y H:i' }}
+                                                    </small>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                    <input class="btn btn-sm btn-outline-danger" type="submit" value="Delete">
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </form>
                             </div>
-                        </form>
-                        <small class="text-muted">
-                            {{ video.created_at|date:'d-m-Y H:i' }}
-                        </small>
+                        </div>
                     </div>
                 </div>
              </div>

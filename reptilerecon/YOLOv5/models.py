@@ -4,6 +4,7 @@ import os
 
 
 class Video(models.Model):
+    name = models.TextField(max_length=200, default="Sem nome")
     video = models.FileField(upload_to='videos/')
     processed_video = models.FileField(upload_to='processed_videos/', default=None, blank=True, null=True)
     signal = models.FileField(upload_to='signals/', default=None, blank=True, null=True)

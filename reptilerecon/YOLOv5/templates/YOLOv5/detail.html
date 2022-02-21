@@ -4,12 +4,15 @@
 
 {% block navbar %}
 
-    <h1>{{ video.created_at|date:'d-m-Y H:i' }}</h1>
+    <div class="nav-item">
+        <a class="btn btn-outline-success" href="{% url 'YOLOv5:index' %}">Voltar</a>
+    </div>
+    <h3>{{ video.created_at|date:'d-m-Y H:i' }}</h3>
 
 {% endblock navbar %}
 
 {% block content %}
-    <div style="visibility: hidden">
+    <div>
         {% get_figure video %}
     </div>
     <div class="row">
