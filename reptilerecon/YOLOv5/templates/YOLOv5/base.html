@@ -39,11 +39,11 @@
         </style>
 
     </head>
-    <body>
+    <body class="bg-secondary font-family">
         <div class="container">
-            <nav class="navbar navbar-light bg-light mb-5 ">
-                <div class="container-fluid">
-                    <a class="navbar-brand text-center">Reptilerecon</a>
+            <nav class="navbar navbar-light bg-secondary mb-5 rounded sticky-top shadow-lg">
+                <div class="container-fluid d-flex flex-row justify-content-center justify-content-md-between">
+                    <a href="{% url 'YOLOv5:index' %}" class="navbar-brand text-center col-12 col-md-auto">Reptilerecon</a>
                     {% block navbar %}
                     {% endblock navbar%}
                 </div>

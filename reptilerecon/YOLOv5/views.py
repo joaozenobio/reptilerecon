@@ -106,7 +106,7 @@ class UploadVideoFormView(FormView):
     def get(self, request, *args, **kwargs):
         form_class = self.get_form_class()
         form = self.get_form(form_class)
-        videos = Video.objects.all()
+        videos = Video.objects.all().order_by('-created_at')
         context = {
             'form': form,
             'videos': videos

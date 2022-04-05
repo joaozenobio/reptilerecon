@@ -13,3 +13,4 @@ def get_figure(video):
     figure = px.line(coef_list)
     figure_output_path = f"{settings.BASE_DIR}/YOLOv5/templates/YOLOv5/figure.html"
     figure.write_html(figure_output_path)
+    return ""

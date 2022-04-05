@@ -4,13 +4,18 @@
 
 {% block navbar %}
 
-    <form class="" action="{% url 'YOLOv5:index' %}" method="post" enctype="multipart/form-data">
+    <form action="{% url 'YOLOv5:index' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.non_field_errors }}
         <div class="input-group">
             {{ form.video.errors }}
             {{ form.video }}
-            <button type="submit" class="btn btn-success">
+            <button type="submit" class="btn btn-success d-none d-md-block">
+                Upload
+            </button>
+        </div>
+        <div class="d-flex flex-row justify-content-center">
+            <button type="submit" class="btn btn-success d-md-none d-flex mx-2 mt-2">
                 Upload
             </button>
         </div>
@@ -26,48 +31,26 @@
 {% block content %}
     <div class="row">
     {% for video in videos  %}
-        <div class="col-6">
-            <div class="card box-shadow">
+        <div class="col-sm-12 col-md-6">
+            <div class="card box-shadow m-2 p-2 bg-light shadow-lg">
                 <a role="button" href="{% url 'YOLOv5:detail' video.id %}">
                     <img src="{{ video.thumbnail.url }}" class="card-img-top" alt="...">
                 </a>
                 <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="row">
-                            <div class="col-12 d-flex justify-content-between align-items-baseline">
-                                <h4 class="d-flex">{{ video.video.url|get_file_name }}</h4>
-                                <small class="text-muted d-flex">
-                                    {{ video.created_at|date:'d-m-Y H:i' }}
-                                </small>
+                    <div class="row d-flex justify-content-center">
+                        <div class="row col-md-12 d-flex flex-row">
+                            <div class="col-12 col-md-8 d-flex justify-content-center justify-content-md-start align-items-baseline">
+                                <h4 class="d-flex text-truncate" style="overflow-x: scroll;">{{ video.video.url|get_file_name }}</h4>
                             </div>
-                            <div class="col-12 d-flex justify-content-end">
-                                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modal{{ video.id }}">
-                                    Deletar
-                                </button>
-                                <form action="{% url 'YOLOv5:delete' video.id %}" method="post" enctype="multipart/form-data">
-                                    {% csrf_token %}
-                                    <div class="modal fade" id="modal{{ video.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h4 class="modal-title" id="staticBackdropLabel">
-                                                        Você tem certeza que quer deletar este video?
-                                                    </h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <img src="{{ video.thumbnail.url }}" class="card-img-top" alt="...">
-                                                    <small class="text-muted modal-footer">
-                                                        {{ video.created_at|date:'d-m-Y H:i' }}
-                                                    </small>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                                    <input class="btn btn-sm btn-outline-danger" type="submit" value="Delete">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
+                            <div class="col-12 col-md-4 d-flex flex-column">
+                                <div class="col-12 d-flex justify-content-center justify-content-md-end my-1">
+                                    <small class="text-muted">
+                                        {{ video.created_at|date:'d-m-Y H:i' }}
+                                    </small>
+                                </div>
+                                <div class="col-12 d-flex justify-content-center justify-content-md-end my-1">
+                                    {% include "YOLOv5/delete_modal.html" %}
+                                </div>
                             </div>
                         </div>
                     </div>

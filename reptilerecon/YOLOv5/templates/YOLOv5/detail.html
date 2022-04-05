@@ -5,7 +5,7 @@
 {% block navbar %}
 
     <div class="nav-item">
-        <a class="btn btn-outline-success" href="{% url 'YOLOv5:index' %}">Voltar</a>
+        <a class="btn btn-success" href="{% url 'YOLOv5:index' %}">Back</a>
     </div>
     <h3>{{ video.created_at|date:'d-m-Y H:i' }}</h3>
 
@@ -15,7 +15,7 @@
     <div>
         {% get_figure video %}
     </div>
-    <div class="row">
+    <div class="card box-shadow m-2 p-2 bg-light shadow-lg">
         <fieldset>
             {% if error_message %}
                 <p><strong>{{ error_message }}</strong></p>
@@ -31,37 +31,24 @@
             {% include "YOLOv5/figure.html" %}
         </div>
     </div>
-    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-        Deletar
-    </button>
-    <a type="button" class="btn btn-outline-info" href="{{ video.processed_video.url }}" download>
-        Download do video
-    </a>
-    <a type="button" class="btn btn-outline-info" href="{{ video.signal.url }}" download>
-        Download do arquivo CSV
-    </a>
-    <form action="{% url 'YOLOv5:delete' video.id %}" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="staticBackdropLabel">
-                            Você tem certeza que quer deletar este video?
-                        </h4>
-                    </div>
-                    <div class="modal-body">
-                        <h5>
-                            {{ video.updated_at|date:'d-m-Y H:i' }}
-                        </h5>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <input class="btn btn-sm btn-outline-danger" type="submit" value="Delete">
-                    </div>
-                </div>
+    <div class="col-12 d-flex flex-row justify-content-start">
+        <div class="col-6 d-flex justify-content-start">
+            <div class="d-flex me-2 my-2">
+                <a type="button" class="btn btn-info" href="{{ video.processed_video.url }}" download>
+                    Download video
+                </a>
+            </div>
+            <div class="d-flex me-2 my-2">
+                <a type="button" class="btn btn-info" href="{{ video.signal.url }}" download>
+                    Download CSV
+                </a>
             </div>
         </div>
-    </form>
+        <div class="col-6 d-flex justify-content-end">
+            <div class="d-flex me-2 my-2">
+                {% include "YOLOv5/delete_modal.html" %}
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
