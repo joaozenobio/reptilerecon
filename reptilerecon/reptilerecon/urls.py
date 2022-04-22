@@ -21,6 +21,6 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 from django.views.generic.base import RedirectView
 
 urlpatterns = [
-    path('YOLOv5/', include('YOLOv5.urls', namespace='YOLOv5_nm')),
+    path('reptilerecon/', include('YOLOv5.urls', namespace='YOLOv5_nm')),
     path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -27,12 +27,12 @@ with open('/home/tropidurus/skdj.txt') as f:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['0.0.0.0']
-#'200.239.169.123'
+ALLOWED_HOSTS = ['0.0.0.0', '200.239.134.154', '.localhost', '127.0.0.1', '[::1]']
+#'200.239.134.154'
 
 SECURE_SSL_REDIRECT = False
 SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
 
 # Application definition
 
