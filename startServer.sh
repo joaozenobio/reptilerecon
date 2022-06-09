@@ -1,6 +1,9 @@
 #!/bin/bash
 
+git submodule init
+git submodule update
 cd reptilerecon/yolov5 && pip install -r requirements.txt && cd ..
+python manage.py makemigrations
 pip install django==4.0.3
 pip install opencv-python
 pip install plotly

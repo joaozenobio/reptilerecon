@@ -21,13 +21,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-with open('/home/tropidurus/skdj.txt') as f:
+with open('/home/joaozenobio/skdj.txt') as f:
     SECRET_KEY = f.read().strip()
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0', '200.239.134.154', '.localhost', '127.0.0.1', '[::1]']
+ALLOWED_HOSTS = ['0.0.0.0', '.localhost', '127.0.0.1', '[::1]']
 #'200.239.134.154'
 
 SECURE_SSL_REDIRECT = False
