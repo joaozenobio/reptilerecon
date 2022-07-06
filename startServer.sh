@@ -3,8 +3,9 @@
 git submodule init
 git submodule update
 pip install -r reptilerecon/yolov5/requirements.txt
+python reptilerecon/manage.py makemigrations YOLOv5
 python reptilerecon/manage.py migrate
-python reptilerecon/manage.py makemigrations
+mkdir reptilerecon/media
 pip install django==4.0.3
 pip install opencv-python
 pip install plotly

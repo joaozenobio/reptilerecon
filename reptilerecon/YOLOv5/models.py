@@ -8,7 +8,7 @@ class Video(models.Model):
     video = models.FileField(upload_to='videos/')
     processed_video = models.FileField(upload_to='processed_videos/', default=None, blank=True, null=True)
     signal = models.FileField(upload_to='signals/', default=None, blank=True, null=True)
-    thumbnail = models.ImageField(upload_to='thumbnails/')
+    thumbnail = models.ImageField(upload_to='thumbnails/', default=None)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
