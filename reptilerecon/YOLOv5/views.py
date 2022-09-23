@@ -14,6 +14,7 @@ import torch
 import numpy as np
 import pandas as pd
 import os
+import math
 
 
 class UploadVideoFormView(FormView):
@@ -69,8 +70,13 @@ class UploadVideoFormView(FormView):
                         cv2.circle(image, (x_mean_head, y_mean_head), radius=5, color=(0, 0, 255), thickness=-1)
                         cv2.circle(image, (x_mean_body, y_mean_body), radius=5, color=(0, 0, 255), thickness=-1)
                         video_writer.write(image)
-                        v = (y_mean_head - y_mean_body)
-                        coef_list.append(v)
+                        x = x_mean_head
+                        y = y_mean_head
+                        a1 = math.sqrt(math.pow(y_mean_body, 2) + math.pow(x_mean_body, 2))
+                        a2 = math.sqrt(math.pow(y_mean_head - y_mean_body, 2) + math.pow(x_mean_head - x_mean_body, 2))
+                        d = (math.pow(x, 2) + math.pow(y, 2) - math.pow(a1, 2) - math.po2(a2, 2)) / (2 * a1 * a2)
+                        theta2 = math.atan(math.sqrt(1 - math.pow(d, 2)) / d)
+                        coef_list.append(theta2)
                     else:
                         coef_list.append(np.NaN)
                         video_writer.write(image)
