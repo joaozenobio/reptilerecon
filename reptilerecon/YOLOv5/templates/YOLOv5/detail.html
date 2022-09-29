@@ -1,7 +1,5 @@
 {% extends 'YOLOv5/base.html' %}
 
-{% load detail_tags %}
-
 {% block navbar %}
 
     <div class="nav-item">
@@ -12,23 +10,21 @@
 {% endblock navbar %}
 
 {% block content %}
-    <div>
-        {% get_figure video %}
-    </div>
     <div class="card box-shadow m-2 p-2 bg-light shadow-lg">
         <fieldset>
             {% if error_message %}
                 <p><strong>{{ error_message }}</strong></p>
             {% endif %}
-            <div class="embed-responsive embed-responsive-16by9">
-                <video width="400" class="embed-responsive-item" controls>
+            <div id="video_container" class="embed-responsive embed-responsive-16by9">
+                <video id="video" width="400" class="embed-responsive-item" controls>
                     <source src="{{ video.processed_video.url }}" type="video/mp4">
                     Your browser does not support HTML5 video.
                 </video>
             </div>
         </fieldset>
+        <button type="button" id="play_button" class="btn btn-success">Play</button>
         <div>
-            {% include "YOLOv5/figure.html" %}
+            {% include video.plot.path %}
         </div>
     </div>
     <div class="col-12 d-flex flex-row justify-content-start">
@@ -50,5 +46,25 @@
             </div>
         </div>
     </div>
+
+    <script>
+        var playButton = document.getElementById("play_button");
+        // Event listener for the play/pause button
+        playButton.addEventListener("click", function() {
+            if (video.paused == true) {
+                // Play the video
+                video.play();
+
+                // Update the button text to 'Pause'
+                playButton.innerHTML = "Pause";
+            } else {
+                // Pause the video
+                video.pause();
+
+                // Update the button text to 'Play'
+                playButton.innerHTML = "Play";
+            }
+        });
+    </script>
 
 {% endblock %}

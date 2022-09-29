@@ -61,7 +61,7 @@ ROOT_URLCONF = 'reptilerecon.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, os.path.join(BASE_DIR, "media/plots"))],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

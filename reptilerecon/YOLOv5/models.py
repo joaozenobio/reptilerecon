@@ -8,6 +8,7 @@ class Video(models.Model):
     video = models.FileField(upload_to='videos/')
     processed_video = models.FileField(upload_to='processed_videos/', default=None, blank=True, null=True)
     signal = models.FileField(upload_to='signals/', default=None, blank=True, null=True)
+    plot = models.FileField(upload_to='plots/', default=None, blank=True, null=True)
     thumbnail = models.ImageField(upload_to='thumbnails/', default=None)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -22,4 +23,5 @@ def auto_delete_file_on_delete(sender, instance, **kwargs):
             instance.video.delete(save=False)
             instance.processed_video.delete(save=False)
             instance.signal.delete(save=False)
+            instance.plot.delete(save=False)
             instance.thumbnail.delete(save=False)

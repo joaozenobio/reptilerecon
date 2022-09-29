@@ -15,6 +15,7 @@ import numpy as np
 import pandas as pd
 import os
 import math
+import plotly.express as px
 
 
 class UploadVideoFormView(FormView):
@@ -38,7 +39,7 @@ class UploadVideoFormView(FormView):
             for f in files:
                 video = Video(video=f)
                 video_path = f.temporary_file_path()
-                model = torch.hub.load(f"{settings.BASE_DIR}/yolov5", 'custom', path=f"{settings.BASE_DIR}/best.pt", source='local')
+                model = torch.hub.load(f"{settings.BASE_DIR}/yolov5", 'custom', path=f"{settings.BASE_DIR}/best.pt", source='local', force_reload=True)
                 model.conf = 0.25
                 video_capture = cv2.VideoCapture(video_path)
                 width = int(video_capture.get(cv2.CAP_PROP_FRAME_WIDTH))
@@ -48,6 +49,8 @@ class UploadVideoFormView(FormView):
                 video_writer = cv2.VideoWriter(video_output_path, fourcc, 30.0, (width, height))
                 success, image = video_capture.read()
                 coef_list = []
+                x = 0.
+                y = 0.
                 while success:
                     results = model(image)
                     points = dict()
@@ -70,13 +73,17 @@ class UploadVideoFormView(FormView):
                         cv2.circle(image, (x_mean_head, y_mean_head), radius=5, color=(0, 0, 255), thickness=-1)
                         cv2.circle(image, (x_mean_body, y_mean_body), radius=5, color=(0, 0, 255), thickness=-1)
                         video_writer.write(image)
+                        difference = math.sqrt(math.pow(x - x_mean_head, 2) + math.pow(y - y_mean_head, 2))
                         x = x_mean_head
                         y = y_mean_head
-                        a1 = math.sqrt(math.pow(y_mean_body, 2) + math.pow(x_mean_body, 2))
-                        a2 = math.sqrt(math.pow(y_mean_head - y_mean_body, 2) + math.pow(x_mean_head - x_mean_body, 2))
-                        d = (math.pow(x, 2) + math.pow(y, 2) - math.pow(a1, 2) - math.po2(a2, 2)) / (2 * a1 * a2)
-                        theta2 = math.atan(math.sqrt(1 - math.pow(d, 2)) / d)
-                        coef_list.append(theta2)
+                        if math.fabs(difference) > 1.5:
+                            a1 = math.sqrt(math.pow(y_mean_body, 2) + math.pow(x_mean_body, 2))
+                            a2 = math.sqrt(math.pow(y_mean_head - y_mean_body, 2) + math.pow(x_mean_head - x_mean_body, 2))
+                            d = (math.pow(x, 2) + math.pow(y, 2) - math.pow(a1, 2) - math.pow(a2, 2)) / (2 * a1 * a2)
+                            theta2 = math.atan(math.sqrt(1 - math.pow(d, 2)) / d)
+                            coef_list.append(np.degrees(theta2))
+                        else:
+                            coef_list.append(np.NaN)
                     else:
                         coef_list.append(np.NaN)
                         video_writer.write(image)
@@ -93,9 +100,13 @@ class UploadVideoFormView(FormView):
                 video_output_path_temp = video_output_path[0:-4] + 't.mp4'
                 os.system(f"ffmpeg -i {video_output_path} -vcodec libx264 {video_output_path_temp} -y")
                 os.rename(video_output_path_temp, video_output_path)
-                with open(video_output_path, 'rb') as f1, open(csv_output_path, 'rb') as f2:
+                figure = px.line(df)
+                figure_output_path = os.path.join(settings.MEDIA_ROOT, "result.html")
+                figure.write_html(figure_output_path)
+                with open(video_output_path, 'rb') as f1, open(csv_output_path, 'rb') as f2,  open(figure_output_path, 'rb') as f3:
                     video.processed_video.save('result.mp4', File(f1), save=False)
                     video.signal.save('result.csv', File(f2), save=False)
+                    video.plot.save('result.html', File(f3), save=False)
                 video.name = video_path.split('/')[-1][0:-4]
                 video_capture = cv2.VideoCapture(video_path)
                 success, image = video_capture.read()
