@@ -10,11 +10,6 @@ then
 	~/miniconda3/bin/conda init zsh
 fi
 
-sudo apt install libgl1 -y
-
-conda clean -a -y
-pip cache purge
-
 eval "$(conda shell.bash hook)"
 conda create --name reptilerecon -y
 conda activate reptilerecon
@@ -28,6 +23,7 @@ pip install -r reptilerecon/yolov5/requirements.txt
 
 pip install Django==5.0.4
 pip install opencv-python
+sudo apt install libgl1 -y
 pip install plotly
 pip install daphne
 

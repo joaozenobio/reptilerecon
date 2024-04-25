@@ -21,7 +21,7 @@ class MultipleFileField(forms.FileField):
         return result
 
 class UploadVideoForm(forms.ModelForm):
-    photo = MultipleFileField(label='Select files', required=False)
+    video = MultipleFileField(label='Select files', required=False)
 
     class Meta:
         model = Video
