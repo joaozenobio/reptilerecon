@@ -10,6 +10,8 @@ then
 	~/miniconda3/bin/conda init zsh
 fi
 
+sudo apt install libgl1 -y
+
 conda clean -a -y
 pip cache purge
 

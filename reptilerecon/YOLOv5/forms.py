@@ -6,7 +6,6 @@ from django.forms import widgets
 
 class MultipleFileInput(forms.ClearableFileInput):
     allow_multiple_selected = True
-    attrs = {'class': 'form-control'}
 
 class MultipleFileField(forms.FileField):
     def __init__(self, *args, **kwargs):
