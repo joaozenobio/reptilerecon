@@ -24,7 +24,7 @@ git submodule init
 git submodule update
 pip install -r reptilerecon/yolov5/requirements.txt
 
-pip install Django
+pip install Django==5.0.4
 pip install opencv-python
 pip install plotly
 pip install daphne
