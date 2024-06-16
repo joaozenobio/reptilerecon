@@ -15,12 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.conf import settings
 from django.conf.urls.static import static
-from django.contrib.staticfiles.storage import staticfiles_storage
-from django.views.generic.base import RedirectView
+from django.conf import settings
 
 urlpatterns = [
-    path('reptilerecon/', include('YOLOv5.urls', namespace='YOLOv5_nm')),
     path('admin/', admin.site.urls),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    path('reptilerecon/', include('signal_extraction.urls', namespace='signal_extraction_ns')),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) \
+  + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+

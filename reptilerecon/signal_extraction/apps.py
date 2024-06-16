@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class Yolov5Config(AppConfig):
+class SignalExtractionConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'YOLOv5'
+    name = 'signal_extraction'

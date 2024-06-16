@@ -1,12 +1,15 @@
-from .models import Video
 from django.shortcuts import render
 from django.views import generic
 from django.urls import reverse_lazy
 from django.views.generic.edit import FormView
-from .forms import UploadVideoForm
 from django.core.files import File
 from django.conf import settings
 from django.core.exceptions import ValidationError
+from django.views.decorators.csrf import csrf_exempt, csrf_protect
+
+from .models import Video
+from .forms import UploadVideoForm
+
 import cv2
 from PIL import Image
 import io
@@ -35,7 +38,7 @@ class UploadVideoFormView(FormView):
         files = request.FILES.getlist('video')
         if form.is_valid():
             for f in files:
-                self.__validate_file_extension(f.temporary_file_path())
+                self.__validate_file_extension(f.name)
             for f in files:
                 video = Video(video=f)
                 video_path = f.temporary_file_path()
